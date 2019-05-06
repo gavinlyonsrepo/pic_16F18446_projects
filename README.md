@@ -39,7 +39,7 @@ in the relevant sub folder. All code is written in C(xc8 compiler)
 
 | Num | Desc | Link |
 | --- | --- | --- |
-| 1  | Dummy | [URL](projects/Dummy) |
+| 1  | Blink | [URL](projects/Blink)|
 | 2 | ----------- | --------------- |
 | 3 | ----------- | --------------- |
 
