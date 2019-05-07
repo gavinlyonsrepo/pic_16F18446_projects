@@ -1,5 +1,4 @@
 
-![PIC](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/PIC16F18446.jpg)
 
 Overview
 --------------------------------------------

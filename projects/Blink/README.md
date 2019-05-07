@@ -15,9 +15,7 @@ Table of contents
 Features
 ----------------------
 The classic Starter program for new micro-controller.
-Program blink an LED attached to GPIO0 every 2 S in C using "delay_ms" function.
+Program blink an LED attached to RA2 every 2 Seconds in C using "delay_ms" function.
 
-
-![PIC](https://github.com/gavinlyonsrepo/pic_12F675_projects/blob/master/images/blink.jpg)
 
 
