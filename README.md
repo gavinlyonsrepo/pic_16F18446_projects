@@ -39,8 +39,9 @@ in the relevant sub folder. All code is written in C(xc8 compiler)
 | Num | Desc | Link |
 | --- | --- | --- |
 | 1  | Blink | [URL](projects/Blink)|
-| 2 | ----------- | --------------- |
+| 2 |  LM35 + 12 bit ADC input HD44780 PCF8574/I2C LCD 16x02 | [URL](projects/LM35) |
 | 3 | ----------- | --------------- |
+| 4 | ----------- | --------------- |
 
 
 Communication
