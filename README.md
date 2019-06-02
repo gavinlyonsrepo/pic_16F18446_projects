@@ -34,13 +34,13 @@ Each Project has a short Readme, schematic and code files
 in the relevant sub folder. All code is written in C(xc8 compiler)
 
 
-**Project Code List:**
+**Project List:**
 
 | Num | Desc | Link |
 | --- | --- | --- |
 | 1  | Blink | [URL](projects/Blink)|
 | 2 |  LM35 + 12 bit ADC input HD44780 PCF8574/I2C LCD 16x02 | [URL](projects/LM35) |
-| 3 | ----------- | --------------- |
+| 3 |  TM1638 Seven Segment LED and Push Button Module | URL](projects/TM1638) |
 | 4 | ----------- | --------------- |
 
 
