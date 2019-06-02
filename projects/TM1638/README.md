@@ -9,9 +9,8 @@ This module is the (KEY & LED) variant which has 8 LED's and 8 Push  buttons.
 * Complier: xc8 v2.05 compiler
 * PIC: PIC16F18446
 * IDE:  MPLAB X v5.05
-* Foundation services library: 0.1.31 (I2C)
 * MCC version: 3.75
-* Development board: Microchip Curiosity Board DM164137, PIC16F18446
+* Development board: Microchip Curiosity Board DM164137
 
 Table of contents
 ---------------------------
@@ -43,13 +42,11 @@ Connections to PIC:
 2. RC1 = CLK
 3. RC2 = DIO
 
+The commented functions can be found in library header file TM1638.h.
+The library support ASCII ,text ,Hex and allows for setting individual segments.
+The main.c contains a set of tests demonstrating library functions.
 
 ![ module ](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/TM1638.jpg)
 
 
-![ sch ](https://github.com/gavinlyonsrepo/pic_16F1619_projects/blob/master/images/TM1638_2.jpg)
-
-Schematic
-------------------------
-
-![schematic](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/LM35.png)
+![ sch ](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/TM1638_2.jpg)
