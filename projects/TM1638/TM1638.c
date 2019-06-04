@@ -6,81 +6,91 @@
 * Complier: xc8 v2.05 compiler
 * PIC: PIC16F18446
 * IDE:  MPLAB X v5.05
-* Development board: Microchip Curiosity Board, PIC16F1619
+* Development board: Microchip Curiosity Board
 * Created May 2019
 */
 
-#include "TM1638.h"
 #include <string.h>
 #include "mcc_generated_files/mcc.h"
+#include "TM1638.h"
 
-void TM1638init() {
+
+void TM1638Init() {
   STBpin_SetDigitalOutput();
   CLKpin_SetDigitalOutput(); 
   DIOpin_SetDigitalOutput();       
-  sendCommand(ACTIVATE);
-  reset();
+  TM1638SendCommand(ACTIVATE);
+  TM1638Reset();
 }
 
-void sendCommand(uint8_t value)
+void TM1638SendCommand(uint8_t value)
 {
   STBpin_SetLow();
-  shiftOut(value);
+  TM1638shiftOut(value);
   STBpin_SetHigh(); 
 }
 
-void reset() {
-  sendCommand(WRITE_INC); // set auto increment mode
+void TM1638Reset() {
+  TM1638SendCommand(WRITE_INC); // set auto increment mode
   STBpin_SetLow();
-  shiftOut(STARTADR);   // set starting address to 0
+  TM1638shiftOut(SEGADR);   // set starting address to 0
   for (uint8_t i = 0; i < 16; i++)
   {
-    shiftOut(0x00);
+    TM1638shiftOut(0x00);
   }
    STBpin_SetHigh(); 
 }
 
-void setLED(uint8_t position, uint8_t value)
+void TM1638setLED(uint8_t position, uint8_t value)
 {
   DIOpin_SetDigitalOutput(); 
-  sendCommand(WRITE_LOC);
+  TM1638SendCommand(WRITE_LOC);
   STBpin_SetLow();
-  shiftOut(LEDLOC + (position << 1));
-  shiftOut(value);
+  TM1638shiftOut(LEDADR + (position << 1));
+  TM1638shiftOut(value);
   STBpin_SetHigh(); 
 }
 
+void TM1638displayText(char *text) {
+  char c, pos;
 
-void displayText(char text[]) 
-{
-  size_t length = strlen(text);
-  for (uint8_t i = 0; i < length; i++) 
-  {
-    for (uint8_t position = 0; position < 8; position++) 
-    {
-      displayASCII(position, text[position]);
+  pos = 0;
+  while (c = (*text++)) {
+    if (*text == '.') {
+      TM1638displayASCIIwDot(pos++, c);
+
+      text++;
+    }  else {
+      TM1638displayASCII   (pos++, c);
     }
   }
 }
-void displaySS(uint8_t position, uint8_t value) { // call 7-segment
-  sendCommand(WRITE_LOC);
+
+
+void TM1638displayASCIIwDot(uint8_t position, uint8_t ascii) { 
+    // add 128 or 0x080 0b1000000 to turn on decimal point/dot in seven seg
+  TM1638display7Seg(position, SevenSeg[ascii- 32] + 128);
+}
+
+void TM1638display7Seg(uint8_t position, uint8_t value) { // call 7-segment
+  TM1638SendCommand(WRITE_LOC);
   STBpin_SetLow();
-  shiftOut(STARTADR + (position << 1));
-  shiftOut(value);
+  TM1638shiftOut(SEGADR + (position << 1));
+  TM1638shiftOut(value);
   STBpin_SetHigh(); 
 }
 
 
-void displayASCII(uint8_t position, uint8_t ascii) {
-  displaySS(position, SevenSeg[ascii - 32]);
+void TM1638displayASCII(uint8_t position, uint8_t ascii) {
+  TM1638display7Seg(position, SevenSeg[ascii - 32]);
 }
  
-void displayHex(uint8_t position, uint8_t hex) 
+void TM1638displayHex(uint8_t position, uint8_t hex) 
 {
     uint8_t offset = 0;
     if ((hex >= 0) && (hex <= 9))
     {
-        displaySS(position, SevenSeg[hex + 16]);
+        TM1638display7Seg(position, SevenSeg[hex + 16]);
         // 16 is offset in reduced ASCII table for 0 
     }else if ((hex >= 10) && (hex <=15))
     {
@@ -94,22 +104,22 @@ void displayHex(uint8_t position, uint8_t hex)
          case 14: offset = 'E'; break;
          case 15: offset = 'F'; break;
         }
-        displaySS(position, SevenSeg[offset-32]);
+        TM1638display7Seg(position, SevenSeg[offset-32]);
     }
     
 }
 
-void shiftOut(uint8_t data)
+void TM1638shiftOut(uint8_t data)
 {
         for (int i=0 ; i<8 ; i++)
         {
         DIOpin_LAT = (data >> i) & 0x01; // bit shift and bit mask data. 
-        sclock(); //enable data storage clock
+        TM1638sclock(); //enable data storage clock
          }
 }
 
 
-void sclock(void){
+void TM1638sclock(void){
     CLKpin_SetHigh(); 
     __delay_us(SCLK_DELAY);
     CLKpin_SetLow(); 
@@ -117,17 +127,17 @@ void sclock(void){
 }
 
 
-uint8_t readButtons()
+uint8_t TM1638readButtons()
 {
   uint8_t buttons = 0;
   STBpin_SetLow();
-  shiftOut(BUTTONS);
+  TM1638shiftOut(BUTTONS);
   
   DIOpin_SetDigitalInput();
 
   for (uint8_t i = 0; i < 4; i++)
   {
-    uint8_t v = shiftIn() << i;
+    uint8_t v = TM1638shiftIn() << i;
     buttons |= v;
   }
 
@@ -136,7 +146,7 @@ uint8_t readButtons()
   return buttons;
 }
 
-uint8_t shiftIn(void) {
+uint8_t TM1638shiftIn(void) {
 
  uint8_t value = 0;
  uint8_t i;
@@ -151,4 +161,11 @@ uint8_t shiftIn(void) {
 
 }
 
-
+void TM1638brightness(uint8_t brightness)
+{
+    uint8_t  value = 0;
+    value = BRIGHTADR + (0x07 & brightness);
+    STBpin_SetLow();
+    TM1638shiftOut(value);
+    STBpin_SetHigh(); 
+}
