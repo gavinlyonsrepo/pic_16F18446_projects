@@ -36,7 +36,7 @@ void main(void)
         __delay_ms(2000);
         
        
-       //test 1 Turn on single segment ghfedcba 
+       //test 1 Turn on single segment gfedcba 
       //IN this case LED 0 segment g (middle dash)
        TM1638display7Seg(4,0b01000000);
        TM1638setLED(1, 1);

@@ -3,10 +3,6 @@
 * File: TM1638.h
 * Description: TM1638.h header file library for TM1638 module(LED & KEY).
 * Author: Gavin Lyons.
-* Complier: xc8 v2.05 compiler
-* PIC: PIC16F18446
-* IDE:  MPLAB X v5.05
-* Development board: Microchip Curiosity Board,
 * Created May 2019
 */
 
@@ -33,6 +29,7 @@ void TM1638Init(void);
 void TM1638SendCommand(uint8_t value);
 
 // Reset module 
+void TM1638Reset(void);
 
 //Sets the brightness level on a scale of brightness = 0 to 7.
 //0 is not turned off, it's just the lowest brightness.
@@ -60,8 +57,8 @@ void TM1638displayASCIIwDot(uint8_t position, uint8_t ascii) ;
 void TM1638displayHex(uint8_t position, uint8_t hex);
 
 // Send seven segment value to seven segment
-//  pass position 0-7 byte of data corresponding to segments (dp)ghfedcba
-// i.e 0b010000001 will set g and a on. 
+//  pass position 0-7 byte of data corresponding to segments (dp)gfedcba
+// i.e 0b01000001 will set g and a on. 
 void TM1638display7Seg(uint8_t position, uint8_t value);
 
 //Shift out a byte of data from DIO line, used internally 

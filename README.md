@@ -22,10 +22,7 @@ Project List
 A set of Projects and example code for the 20-pin, 8-bit PIC 16F18446 Microcontroller,
 made by *Microchip*. 
 
-This PIC can be programmed with the
-DM164137 - Development Kit, Curiosity, Integrated Programmer/Debugger,
-which supports 8/14/20 Pin 8-Bit PIC MCU's. 
-The curiosity board was used as development board 
+DM164137 - Development Kit used as the development board, 
 during the development of these programs.
 
 Each Project has a short Readme, schematic and code files
@@ -35,10 +32,9 @@ in the relevant sub folder. All code is written in C(xc8 compiler)
 
 | Num | Desc | Link |
 | --- | --- | --- |
-| 1  | Blink | [URL](projects/Blink)|
-| 2 |  LM35 + 12 bit ADC input HD44780 PCF8574/I2C LCD 16x02 | [URL](projects/LM35) |
-| 3 |  TM1638 Seven Segment LED and Push Button Module | [URL](projects/TM1638) |
-| 4 | ----------- | --------------- |
+| 1 |  LM35 + 12 bit ADC input HD44780 PCF8574/I2C LCD 16x02 | [URL](projects/LM35) |
+| 2 |  TM1638 Seven Segment LED and Push Button Module library | [URL](projects/TM1638) |
+| 3 | ----------- | --------------- |
 
 
 Communication
