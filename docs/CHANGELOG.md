@@ -7,5 +7,7 @@
     *  LM35 to LCD/IC2
 
 ### Project 3 Added 010619
-    * Tm1638 module (Key and LED) 8 LEDs and 8 Keys. 
+    * Tm1638 module (Key and LED) 8 LEDs and 8 pushbutton. 
 
+### Project 4 Added 010919
+    * Tm1638 module "Model 2" (QYF) 16 Keys, 16 pushbuttons. 
