@@ -34,7 +34,7 @@ in the relevant sub folder. All code is written in C(xc8 compiler)
 | --- | --- | --- |
 | 1 |  LM35 + 12 bit ADC input HD44780 PCF8574/I2C LCD 16x02 | [URL](projects/LM35) |
 | 2 |  TM1638 Seven Segment 8 LED and 8 Push Button Module library | [URL](projects/TM1638) |
-| 3 |  TM1638 Seven Segment 16 Push Button Module (model 2) library  | [URL](projects/TM1638plus_Model2) |
+| 3 |  TM1638 Seven Segment 16 Push Button Module (model 2) library  | [URL](projects/TM1638_Model2) |
 
 
 Communication

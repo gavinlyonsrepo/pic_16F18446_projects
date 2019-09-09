@@ -22,15 +22,15 @@ Connections to PIC:
 
 1. GPIO = STB = Strobe
 2. GPIO  = CLK  = Clock
-3. GPIO = DIO = Data input / output
+3. GPIO = DIO = Data input / output  (Configure as open drain)
 
 This library supports this variants of the TM1638 module
 
 1. TM1638 16 KEY , (QYF) 16 Push buttons (MODEL 2)
 
-** ======================================================================== **
+**========================================================================**
 
-** Model 2: TM1638 Module 16 Push buttons (16 KEY) (QYF) **
+**Model 2: TM1638 Module 16 Push buttons (16 KEY) (QYF)**
 
 ![ module ](https://github.com/gavinlyonsrepo/TM1638plus/blob/master/extra/images/tm16381.jpg)
 
@@ -46,9 +46,7 @@ giving a total of 8 digits. A TM1638 controller chip drives the unit.
 
 **Model 2 Library Functions**
 
-The commented functions can be found in library header file TM1638plus.h.
-The library support Strings , decimal ,Hex and allows for setting individual segments,
-and the decimal point of segment.
+The commented functions can be found in library header file TM1638plus_Model2.h.
 The TM1638plus_TEST_Model2.ino contains a set of tests demonstrating library functions.
 
 For more detailed information see commented headers in header file(.h).
@@ -60,3 +58,4 @@ For more detailed information see commented headers in header file(.h).
 5. Adjust brightness of module. Support 8 degree brightness adjustment.
 If user wishes to change the default brightness at start-up change.
 The DEFAULT_BRIGHTNESS define in header file. 
+6. Decimal point function is supported.
