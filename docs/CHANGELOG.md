@@ -11,3 +11,6 @@
 
 ### Project 4 Added 010919
     * Tm1638 module "Model 2" (QYF) 16 Keys, 16 pushbuttons. 
+
+### Project 5 Added 150919
+	* 14 segment alphanumeric LED display module library.
