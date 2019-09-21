@@ -13,9 +13,7 @@ N is number of digits used.
 * Author: Gavin Lyons.
 * Complier: xc8 v2.05 compiler
 * PIC: PIC16F18446
-* IDE:  MPLAB X v5.05
-* Foundation services library: 0.1.31 (I2C)
-* MCC version: 3.75
+* IDE:  MPLAB X v5.15
 * Development board: Microchip Curiosity Board DM164137, PIC16F18446
 
 Table of contents
@@ -29,33 +27,34 @@ Table of contents
 Features
 ----------------------
 
-This is a fork of the arduino library "FourteenSegDisplay", I wrote at :
+This is a fork of the Arduino library "FourteenSegDisplay", I wrote at :
 [link](https://github.com/gavinlyonsrepo/FourteenSegDisplay).
 
 An PIC library to display data on a 14 segment LED module.
 It requires two daisy chained shift registers.
-Tested with 74HC595.
-The module was tested on was a two digit LDD-F5406RI common cathode module.
+Tested with 74HC595 shift registers.
+The library was tested with a two digit LDD-F5406RI common cathode module.
 Library is also designed to work with common anode. It also provides a function for manually setting
 segments to any user defined pattern. It requires (3+N) Digital GPIO pins where 
 N is number of digits used. 
 
-The LDD-F5406RI short-form datasheet is in extra folder.
+The LDD-F5406RI short-form datasheet is in the extra folder.
 
 Use transistors to switch Digits on/off unless using high value of 
 current limit resistors: For example 2.2K resistors will ((1.44mA) * 15= 21.6mA )will 
-give total current per digit of 21.6mA with all segments on. 
+give total current per digit of 21.6mA with all segments on. Check your datasheet to see current limit
+of GPIO for given microcontroller. 
 
 
 **Connections**
 
-Note: N is number of digits
+Note: (N) is number of digits
 
 | PIC |  Shift register 1 | Shift register 2 | Digit(N) LDD-F5406RI |
 | --- | --- | --- | --- |
-| GPIO | SCLK 74HC595 | SCLK 74HC595| n/c |
-| GPIO | RCLK 74HC595 | RCLK 74HC595| n/c |
-| GPIO | SER 74HC595 | n/c |  n/c |
+| GPIO1 | SCLK 74HC595 | SCLK 74HC595| n/c |
+| GPIO2 | RCLK 74HC595 | RCLK 74HC595| n/c |
+| GPIO3 | SER 74HC595 | n/c |  n/c |
 | n/c | QH' 74HC595 | SER 74HC595 | n/c |
 | GPIO(N) | n/c |  n/c | D(N) pins |
 
