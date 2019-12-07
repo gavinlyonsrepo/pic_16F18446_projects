@@ -14,3 +14,6 @@
 
 ### Project 5 Added 150919
 	* 14 segment alphanumeric LED display module library.
+
+### Project 6 Added 291119
+	* Serial to Bluetooth module example code added.
