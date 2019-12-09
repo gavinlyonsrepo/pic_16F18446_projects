@@ -28,8 +28,13 @@
 #define ASCII_OFFSET 32 // Ascii table offset to jump over first missing 32 chars   
 #define DOT_MASK_DEC 128 // 0x80 Mask to  switch on decimal point in seven seg.  
 
+bool _SWAP_NIBBLES = false;
+
     // Init the module
-    void TM1638Init_Model2(void);
+    // swap_nibbles is false by default set to true to swap the nibbles in 7-seg display
+    // i.e ABCDEFGH becomes EFGHABCD. This is support different versions of Model 2 on market
+    // same function but have been wired differently. 
+    void TM1638Init_Model2(bool swap_nibbles);
 
     // Send a command to module
     void TM1638sendCommand(uint8_t value);

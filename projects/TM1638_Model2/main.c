@@ -19,12 +19,12 @@ void main(void)
     // initialize the device
     
     SYSTEM_Initialize();
-    TM1638Init_Model2();
+    TM1638Init_Model2(false); //set to True to swap nibbles, default is false.
     TM1638Reset();
     TM1638brightness(DEFAULT_BRIGHTNESS);
         
           // Test 1 display strings
-          TM1638DisplayStr("   HELLO", 0x04); 
+          TM1638DisplayStr("   HELLO", 0x04); //"   HEL.LO"
           __delay_ms(2000);
            TM1638DisplayStr("HELLOYOU", 0); 
           __delay_ms(2000);

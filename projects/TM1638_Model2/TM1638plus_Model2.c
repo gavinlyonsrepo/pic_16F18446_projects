@@ -13,13 +13,19 @@
 #include "TM1638plus_Model2.h"
 
 
-void TM1638Init_Model2(void) {
+void TM1638Init_Model2( bool swap_nibbles) 
+{
   STBpin_SetDigitalOutput();
   CLKpin_SetDigitalOutput(); 
   DIOpin_SetDigitalOutput();
   TM1638sendCommand(ACTIVATE_TM);
   TM1638brightness(DEFAULT_BRIGHTNESS);
   TM1638Reset();
+        if (swap_nibbles == true)
+        {
+            _SWAP_NIBBLES = true;
+        }
+  
 }
 
 void TM1638sendCommand(uint8_t value)
@@ -45,6 +51,14 @@ void TM1638Reset()
 
 void TM1638DisplaySegments(uint8_t segment, uint8_t digit)
 {
+   if (_SWAP_NIBBLES == true)
+   {
+   	  uint8_t upper , lower = 0;
+   	  lower = (digit) & 0x0F;  // select lower nibble
+   	  upper =  (digit >> 4) & 0X0F; //select upper nibble
+   	  digit = lower << 4 | upper;
+   }
+    
   segment = (segment<<1);
   TM1638sendCommand(WRITE_LOC);
   STBpin_SetLow();

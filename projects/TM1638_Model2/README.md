@@ -4,7 +4,16 @@ Overview
 * Description: An PIC library to display data on a 8-digit TM1638 seven segment module
 This library supports (16 KEY)(QFY) variant which has 16 pushbuttons.
 * Author: Gavin Lyons.
-* Development platform: PIC 16F18446
+* PIC: PIC 16F18446
+* URL : https://github.com/gavinlyonsrepo/pic_16F18446_projects
+* Model : 2
+* Development board: Microchip Curiosity Board DM164137
+* Complier: xc8 v2.05 compiler
+* PIC: PIC16F18446
+* IDE:  MPLAB X v5.15
+* MCC version: 3.85
+* Note: This library is a fork of a section of the Arduino library "TM1638plus" which is also
+written by Author and can be found in Arduino library manger. 
 
 
 Table of contents
@@ -16,17 +25,29 @@ Table of contents
 Features
 ----------------------
 
+These Tm1638 modules are commonly available. 
+They consist of an 8-digit seven segment display with decimal points,
+16 Push buttons, controlled by Tm1638 IC.
+I have seen two variants, this library is for the one Model 2
+If you want model 1 ,
+See "TM1638 Seven Segment 8 LED and 8 Push Button Module library" entry on menu of main PIC_16F1886 Readme.  
 
-These TM1638 modules are commonly available. 
+| Model No | Module Name | LEDS | KEYS | 
+| ------ | ------ |  ------ | ------ |
+| One | TM1638 LED & KEY | 8 | 8 |
+| Two | TM1638 KEYS QYF  | 0 | 16 |
+
+
 Connections to PIC: 
 
-1. GPIO = STB = Strobe
-2. GPIO  = CLK  = Clock
-3. GPIO = DIO = Data input / output  (Configure as open drain)
+1. GPIO = RC0 =  STB = Strobe
+2. GPIO  = RC1 =  CLK  = Clock
+3. GPIO = RC2  = DIO = Data input / output  (Configure as open drain)
 
 This library supports this variants of the TM1638 module
 
 1. TM1638 16 KEY , (QYF) 16 Push buttons (MODEL 2)
+
 
 **========================================================================**
 
@@ -59,3 +80,20 @@ For more detailed information see commented headers in header file(.h).
 If user wishes to change the default brightness at start-up change.
 The DEFAULT_BRIGHTNESS define in header file. 
 6. Decimal point function is supported.
+
+**Note NB**
+
+Swapped display Issue:
+For some users using the arduino library the nibbles in information display byte 
+where swapped around. This is because there are different modules on market with different wiring. 
+Same function but different pcb which requires a small code change.
+See issue #3 on [github](https://github.com/gavinlyonsrepo/TM1638plus/issues/3) 
+called Swapped display :: "ABCDEFGH" becomes "EFGHABCD". 
+
+If you test library and you see this issue, in order to fix this when you init the 
+display, set the parameter "swap_nibbles" to True, The default is false.
+
+| PCB Model Label | Operation | Init function call  |
+| ------ | ------ | ------ | 
+| QYF-TM1638 | default operation | TM1638Init_Model2(false) | 
+| QYF-TM1638 -Ver 1.0 | Swapped display Fix | TM1638Init_Model2(true) |  

@@ -6,11 +6,16 @@ Overview
 * Description: A library to display data on a 8-digit TM1638 seven segment module
 This module is the (KEY & LED) variant which has 8 LED's and 8 Push buttons.
 * Author: Gavin Lyons.
+* URL : https://github.com/gavinlyonsrepo/pic_16F18446_projects
+* Model : 1
 * Complier: xc8 v2.05 compiler
 * PIC: PIC16F18446
 * IDE:  MPLAB X v5.05
 * MCC version: 3.75
 * Development board: Microchip Curiosity Board DM164137
+* Note: This library is a fork of a section of the Arduino library "TM1638plus" which is also
+written by Author and can be found in Arduino library manger. 
+
 
 Table of contents
 ---------------------------
@@ -22,17 +27,19 @@ Features
 ----------------------
 
 
-**TM1638 Module 8 Push buttons 8 LEDS (LED & KEY)**
+**TM1638 Module 8 Push buttons 8 LEDS (LED & KEY) MODEL 1**
 
 These Tm1638 modules are commonly available. 
 They consist of an 8-digit seven segment display with decimal points,
-8 Leds and 8 Push buttons.
-I have seen two variants, this library is for the one marked LED & KEY.
-It will not work with the push buttons only module without some modification,
-I don't possess the push button only module at this point so cannot test at this time.
+8 Leds and 8 Push buttons, controlled by Tm1638 IC.
+I have seen two variants, this library is for the one marked LED & KEY( MODEL 1).
+If you have the push buttons(#16) only module, see model 2 entry on menu of main PIC_16F1886 Readme. 
 
-1. TM1638 LED & KEY , 8 LEDS and 8 Push Buttons
-2. TM1638 KEY , 16 Push buttons
+| Model No | Module Name | LEDS | KEYS | 
+| ------ | ------ |  ------ | ------ |
+| One | TM1638 LED & KEY | 8 | 8 |
+| Two | TM1638 KEYS QYF  | 0 | 16 |
+
 
 Two 4 digit 3461AS (common anode , RED , decimal point) are used in this module
 giving a total of 8 digits. A TM1638 controller chip drives the unit.
