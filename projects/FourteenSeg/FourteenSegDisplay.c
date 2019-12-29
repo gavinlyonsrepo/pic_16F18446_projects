@@ -19,35 +19,37 @@ void FourteenSegDisplay(bool common) {
   RCLK_SetDigitalOutput();
 }
 
-void displaySeg(uint16_t value) { 
+void displaySeg(uint16_t value, uint8_t digits) { 
    if (_common == false) 
    {
      value = (value ^ COMMON_ANODE_MASK); // If common anode flip all bits.
+     digits = (digits ^ LOWER_BYTE_MASK);
    }
   uint8_t  upper , lower = 0;
   lower = (value) & LOWER_BYTE_MASK;  // select lower byte
   upper = (value >> 8) & LOWER_BYTE_MASK; //select upper 
   RCLK_SetLow() ;
+  DataDisplay(digits);
   DataDisplay(upper);
   DataDisplay(lower);
   RCLK_SetHigh();
 }
 
-void displayASCII(uint8_t ascii) {
-  displaySeg(FourteenSeg[ascii - ASCII_OFFSET]);
+void displayASCII(uint8_t ascii, uint8_t digits) {
+  displaySeg(FourteenSeg[ascii - ASCII_OFFSET], digits);
 }
 
-void displayASCIIwDot(uint8_t ascii) { 
+void displayASCIIwDot(uint8_t ascii, uint8_t digits) { 
     // add  0x4000 to turn on decimal point/dot in 14 seg
-  displaySeg(FourteenSeg[ascii - ASCII_OFFSET] + DOT_MASK_DEC);
+  displaySeg(FourteenSeg[ascii - ASCII_OFFSET] + DOT_MASK_DEC, digits);
 }
 
-void displayHex(uint8_t hex) 
+void displayHex(uint8_t hex, uint8_t digits) 
 {
     uint8_t hexchar = 0;
     if ((hex >= 0) && (hex <= 9))
     {
-        displaySeg(FourteenSeg[hex + HEX_OFFSET]);
+        displaySeg(FourteenSeg[hex + HEX_OFFSET], digits);
         // 16 is offset in reduced ASCII table for 0 
     }else if ((hex >= 10) && (hex <=15))
     {
@@ -61,9 +63,26 @@ void displayHex(uint8_t hex)
          case 14: hexchar = 'E'; break;
          case 15: hexchar = 'F'; break;
         }
-        displaySeg(FourteenSeg[hexchar - ASCII_OFFSET]);
+        displaySeg(FourteenSeg[hexchar - ASCII_OFFSET], digits);
     }
     
+}
+
+void displayString(const char* str, uint8_t startPos)
+{
+   char charindex;
+   
+           
+   while (*str != 0) {
+        charindex = (*str++);
+        if (*str == '.') {
+            displayASCIIwDot(charindex, startPos);
+            str++;
+        }  else {
+            displayASCII(charindex, startPos);
+        }
+          startPos = (startPos>>1); //Bitshifting by one to right /2 to change position of bit set position
+   }
 }
 
 /* sclock:

@@ -1,7 +1,7 @@
 /*
 * Project Name: FourteenSegDisplay
-* File: FourteenSegDisplay.h
-* Description: main.c test file for FourteenSegDisplay  library
+* File: main.c
+* Description: test  file for FourteenSegDisplay  library
 * Author: Gavin Lyons.
 * Created: August 2019
 * Fork of Arduino library FourteenSegDisplay
@@ -30,41 +30,50 @@ void main(void)
     while (1)
     {
        //  **** Display digit one ****
-       DIGIT1_SetHigh(); //turn on digit one
 
         // test 1 Hex
-        //displayHex(0x3);
+       //displayHex(0x3, 0x01);
 
         // test 2 ASCII
-        //displayASCII('A');
+        //displayASCII('A', 0x01);
 
         //test 3 ASCII with dot
-        //displayASCIIwDot('A');
+        //displayASCIIwDot('A', 0x01);
 
         // test 4 Segments manual
-        displaySeg(testdata2);
+        //displaySeg(testdata2, 0x01);
 
-        DIGIT1_SetLow(); //turn off digit one
-        __delay_ms(digitdelay);
+
+       // __delay_ms(digitdelay);
 
         // ***** Display digit two ****
-        DIGIT2_SetHigh(); //turn on digit two
 
         // test 1 Hex
-        //displayHex(0xF);
+     //   displayHex(0xF, 0x02);
 
+        
         // test 2 ASCII
-        //displayASCII('B');
+       //displayASCII('B', 0x02);
 
         //test 3 ASCII with dot
-        //displayASCIIwDot('B');
+        //displayASCIIwDot('B', 0x02);
 
         // test 4 Segments manual
-        displaySeg(testdata3);
-
-        DIGIT2_SetLow(); //turn off digit two
-        __delay_ms(digitdelay);
-
+        //displaySeg(testdata3, 0x02);
+        
+        //  __delay_ms(digitdelay);
+        
+         // ***** Display string tests ****
+       
+        // test 5 string
+        //displayString("AB", 0x02);
+        
+        //test 6 string with dots
+        //displayString("A.B", 0x02);
+        
+        //test 7  string 8 digits 
+        displayString("12345678", 0x80);
+        
     }
 }
 /* End of File */

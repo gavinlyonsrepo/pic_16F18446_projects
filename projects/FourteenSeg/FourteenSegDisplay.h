@@ -13,7 +13,7 @@
 
 #include <stdint.h>
 
-#define SHIFT_DELAY 500
+#define SHIFT_DELAY 25   //shift delay in usecconds can be adjusted to avoid flickering 
 #define ASCII_OFFSET 32 // ASCII table offset to jump over first missing 32 chars
 #define HEX_OFFSET   16 // ASCII table offset to reach 0 position
 #define DOT_MASK_DEC   0x4000 //  Mask to switch on decimal point in fourteen segment.   
@@ -31,18 +31,27 @@
     void FourteenSegDisplay(bool common);
     
     // Send ASCII value to 14 segment display, passed ASCII value byte
-    void displayASCII(uint8_t ascii);
+    // Digits position 0x80-0x40-0x20-0x10-0x08-0x04-0x02-0x01 D8-D1
+    void displayASCII(uint8_t ascii, uint8_t digits);
 
     // Same as displayASCII function but turns on dot/decimal point as well 
-    void displayASCIIwDot(uint8_t ascii) ;
+    // Digits position 0x80-0x40-0x20-0x10-0x08-0x04-0x02-0x01 D8-D1
+    void displayASCIIwDot(uint8_t ascii, uint8_t digits) ;
 
     // Send HEX value to 14 segment display, passed a hex value  0-15 : 0x00 to 0x0F
-    void displayHex(uint8_t hex);
+    // Digits position 0x80-0x40-0x20-0x10-0x08-0x04-0x02-0x01 D8-D1
+    void displayHex(uint8_t hex, uint8_t digits);
 
     // Send  segment value to  14 segment display
     //  Passed value corresponding to segments  (DP-N-M-L-K-J-H-G2-G1-F-E-D-C-B-A) Two bytes. 
     // eg 0000000100000001 or 0x0101 will switch on A and H
-    void displaySeg(uint16_t value);
+    // Digits position 0x80-0x40-0x20-0x10-0x08-0x04-0x02-0x01 D8-D1
+    void displaySeg(uint16_t value, uint8_t digits);
+    
+    // This function is for Model 2 design only: passed a string 
+    // and starting position 0x80-0x40-0x20-0x10-0x08-0x04-0x02-0x01 D8-D1
+    // So to print 12345678 as "12345678" set start position to 0x80.
+    void displayString(const char* str, uint8_t startPos);
     
     //Used for timing internally in DataDisplay method
     void sclock(void);
