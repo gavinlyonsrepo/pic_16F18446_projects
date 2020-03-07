@@ -13,19 +13,11 @@ This module is the (KEY & LED) variant which has 8 LED's and 8 Push buttons.
 * IDE:  MPLAB X v5.05
 * MCC version: 3.75
 * Development board: Microchip Curiosity Board DM164137
-* Note: This library is a fork of a section of the Arduino library "TM1638plus" which is also
-written by Author and can be found in Arduino library manger. 
-
-
-Table of contents
----------------------------
-
-  * [Overview](#overview)
-  * [Features](#features)
+* Note: This library is a fork of a section of the [Arduino library](https://github.com/gavinlyonsrepo/TM1638plus) 
+"TM1638plus" which is also written by Author and can be found in Arduino library manger. 
 
 Features
 ----------------------
-
 
 **TM1638 Module 8 Push buttons 8 LEDS (LED & KEY) MODEL 1**
 
@@ -40,7 +32,6 @@ If you have the push buttons(#16) only module, see model 2 entry on menu of main
 | One | TM1638 LED & KEY | 8 | 8 |
 | Two | TM1638 KEYS QYF  | 0 | 16 |
 
-
 Two 4 digit 3461AS (common anode , RED , decimal point) are used in this module
 giving a total of 8 digits. A TM1638 controller chip drives the unit.
 The unit is marked (LED & KEY) 
@@ -51,7 +42,6 @@ Connections to PIC:
 1. RC0 = STB
 2. RC1 = CLK
 3. RC2 = DIO
-
 
 **Library Functions**
 
@@ -72,9 +62,6 @@ For more information see commented headers in header file.
 7. Reset and init module functions.
 8. Adjust brightness of module. Support 8 degree brightness adjustment.
 
-
-
 ![ module ](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/TM1638.jpg)
-
 
 ![ sch ](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/TM1638_2.jpg)

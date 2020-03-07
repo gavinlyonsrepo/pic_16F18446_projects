@@ -112,30 +112,20 @@ unsigned char TM1638ReadKey16()
   STBpin_SetLow();
   TM1638shiftOut(BUTTONS_MODE);
   DIOpin_SetDigitalInput();
-  for (i = 0; i<4; i++)
+ for (i = 0; i < 4; i++)
   {
-    c[i] = TM1638shiftIn();
+	 c[i] = TM1638shiftIn();
+	 if (c[i] == 0x04) key_value = 1 + (2*i); //00000100 4 0x04
+	 if (c[i] == 0x40) key_value = 2 + (2*i); //01000000 64 0x40
+	 if (c[i] == 0x02) key_value = 9 + (2*i); //00000010 2 0x02
+	 if (c[i] == 0x20) key_value = 10 + (2*i);  //00100000 32 0x20
   }
   DIOpin_SetDigitalOutput(); 
   STBpin_SetHigh();
-  
-  if (c[0] == 0x04) key_value = 1; //00000100 4
-  if (c[0] == 0x40) key_value = 2; //01000000 64
-  if (c[1] == 0x04) key_value = 3; 
-  if (c[1] == 0x40) key_value = 4; 
-  if (c[2] == 0x04) key_value = 5; 
-  if (c[2] == 0x40) key_value = 6; 
-  if (c[3] == 0x04) key_value = 7; 
-  if (c[3] == 0x40) key_value = 8; 
-  if (c[0] == 0x02) key_value = 9; //00000010 2
-  if (c[0] == 0x20) key_value = 10;//00100000 32
-  if (c[1] == 0x02) key_value = 11; 
-  if (c[1] == 0x20) key_value = 12; 
-  if (c[2] == 0x02) key_value = 13; 
-  if (c[2] == 0x20) key_value = 14; 
-  if (c[3] == 0x02) key_value = 15; 
-  if (c[3] == 0x20) key_value = 16; 
   return (key_value);
+  // Data matrix for read key_value. 
+  // c3 0110 0110  c2 0110 0110  c1 0110 0110  c0 0110 0110 :bytes read 
+  //    8,16 7,15     6,14 5,13     4,12 3,11     2,10  1,9 :button value
 }
 
 void TM1638shiftOut(uint8_t data)
@@ -167,4 +157,31 @@ uint8_t TM1638shiftIn(void) {
  }
  return value;
 
+}
+
+void TM1638DisplayHexNum(uint16_t  numberUpper, uint16_t numberLower, uint8_t dots, bool leadingZeros)
+{
+  char valuesUpper[DISPLAY_SIZE + 1];
+  char valuesLower[DISPLAY_SIZE/2 + 1];
+  snprintf(valuesUpper, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04X" : "%X", numberUpper);
+  snprintf(valuesLower, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04X" : "%X", numberLower); 
+  strcat(valuesUpper ,valuesLower);
+  TM1638DisplayStr(valuesUpper, dots);
+}
+
+void TM1638DisplayDecNum(unsigned long number, uint8_t  dots, bool leadingZeros)
+{ 
+char values[DISPLAY_SIZE + 1];
+  snprintf(values, DISPLAY_SIZE + 1, leadingZeros ? "%08ld" : "%ld", number); 
+  TM1638DisplayStr(values, dots);
+}
+
+void TM1638DisplayDecNumNibble(uint16_t  numberUpper, uint16_t numberLower, uint8_t  dots, bool leadingZeros)
+{
+  char valuesUpper[DISPLAY_SIZE + 1];
+  char valuesLower[DISPLAY_SIZE/2 + 1];
+  snprintf(valuesUpper, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : "%d", numberUpper);
+  snprintf(valuesLower, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : "%d", numberLower); 
+  strcat(valuesUpper ,valuesLower);
+  TM1638DisplayStr(valuesUpper, dots);
 }

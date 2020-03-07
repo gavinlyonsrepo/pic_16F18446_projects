@@ -12,15 +12,9 @@ This library supports (16 KEY)(QFY) variant which has 16 pushbuttons.
 * PIC: PIC16F18446
 * IDE:  MPLAB X v5.15
 * MCC version: 3.85
-* Note: This library is a fork of a section of the Arduino library "TM1638plus" which is also
-written by Author and can be found in Arduino library manger. 
+* Note: This library is a fork of a section of the [Arduino library](https://github.com/gavinlyonsrepo/TM1638plus) 
+"TM1638plus" which is also written by Author and can be found in Arduino library manger.  
 
-
-Table of contents
----------------------------
-
-  * [Overview](#overview)
-  * [Features](#features)
 
 Features
 ----------------------
@@ -80,6 +74,7 @@ For more detailed information see commented headers in header file(.h).
 If user wishes to change the default brightness at start-up change.
 The DEFAULT_BRIGHTNESS define in header file. 
 6. Decimal point function is supported.
+7. Print decimal and hexadecmial numbers.
 
 **Note NB**
 

@@ -33,7 +33,7 @@ bool _SWAP_NIBBLES = false;
     // Init the module
     // swap_nibbles is false by default set to true to swap the nibbles in 7-seg display
     // i.e ABCDEFGH becomes EFGHABCD. This is support different versions of Model 2 on market
-    // same function but have been wired differently. 
+    // same function but have been wired diferently. 
     void TM1638Init_Model2(bool swap_nibbles);
 
     // Send a command to module
@@ -83,8 +83,21 @@ bool _SWAP_NIBBLES = false;
 
      // Controls clock signal when shifting data out, used internally
     void TM1638sclock(void);
-
-// map of ASCII values/table to 7-segment, offset to position 32. 
+    // Display a Hexadecimal number ,takes a number and byte for decimal point display, leading zeros optional
+    // converts to string. 
+    //void DisplayHexNum(unsigned long number, byte dots, boolean leadingZeros = true);
+    void TM1638DisplayHexNum(uint16_t  numberUpper, uint16_t numberLower, uint8_t dots, bool leadingZeros);
+    
+    // Display a decimal number , takes a number and byte for decimal point display,  leading zeros optional 
+    // converts to string. 
+    void TM1638DisplayDecNum(unsigned long number, uint8_t dots, bool leadingZeros);
+    
+	//Divides the display into two nibbles and displays a Decimal number in each.
+	//takes in two numbers 0-9999 for each nibble ,  and byte for decimal point display,
+	//and leading zeros optional
+	void TM1638DisplayDecNumNibble(uint16_t numberUpper, uint16_t numberLower, uint8_t dots, bool leadingZeros);
+    
+    // map of ASCII values/table to 7-segment, offset to position 32. 
 const  uint8_t SevenSeg[] = {
   0x00, /* (space) */
   0x86, /* ! */
