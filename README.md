@@ -30,5 +30,5 @@ in the relevant sub folder. All code is written in C(xc8 compiler)
 | 2 |  TM1638 Seven Segment 8 LED and 8 Push Button Module library | [URL](projects/TM1638) |
 | 3 |  TM1638 Seven Segment 16 Push Button Module (model 2) library  | [URL](projects/TM1638_Model2) |
 | 4 |  14 segment alphanumeric LED display module library  | [URL](projects/FourteenSeg) |
-| 5 |  Bluetooth example code | [URL](projects/Bluetooth) |
+| 5 |  DHT22 sensor data to PC/Phone via Bluetooth | [URL](projects/Bluetooth) |
 | 6 |  ------- |--------- |
