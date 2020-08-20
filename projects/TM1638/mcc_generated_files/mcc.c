@@ -13,12 +13,12 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.76
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.79.0
         Device            :  PIC16F18446
         Driver Version    :  2.00
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.00 or later
-        MPLAB             :  MPLAB X 5.10
+        Compiler          :  XC8 2.10 and above or later
+        MPLAB             :  MPLAB X 5.30
 */
 
 /*

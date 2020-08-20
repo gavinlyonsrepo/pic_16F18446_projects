@@ -10,16 +10,18 @@
 * Created May 2019
 */
 
+#include <stdio.h>
 #include <string.h>
 #include "mcc_generated_files/mcc.h"
 #include "TM1638.h"
 
 
-void TM1638Init() {
+void TM1638Init(void) {
   STBpin_SetDigitalOutput();
   CLKpin_SetDigitalOutput(); 
   DIOpin_SetDigitalOutput();       
   TM1638SendCommand(ACTIVATE);
+  TM1638brightness(DEFAULT_BRIGHTNESS);
   TM1638Reset();
 }
 
@@ -55,13 +57,13 @@ void TM1638displayText(char *text) {
   char c, pos;
 
   pos = 0;
-  while (c = (*text++)) {
-    if (*text == '.') {
+  while ((c = (*text++)) && pos < DISPLAY_SIZE ) {
+    if (*text == '.' && c != '.') {
       TM1638displayASCIIwDot(pos++, c);
 
       text++;
     }  else {
-      TM1638displayASCII   (pos++, c);
+      TM1638displayASCII(pos++, c);
     }
   }
 }
@@ -69,7 +71,7 @@ void TM1638displayText(char *text) {
 
 void TM1638displayASCIIwDot(uint8_t position, uint8_t ascii) { 
     // add 128 or 0x080 0b1000000 to turn on decimal point/dot in seven seg
-  TM1638display7Seg(position, SevenSeg[ascii- 32] + 128);
+  TM1638display7Seg(position, SevenSeg[ascii- ASCII_OFFSET] +  DOT_MASK_DEC);
 }
 
 void TM1638display7Seg(uint8_t position, uint8_t value) { // call 7-segment
@@ -82,15 +84,15 @@ void TM1638display7Seg(uint8_t position, uint8_t value) { // call 7-segment
 
 
 void TM1638displayASCII(uint8_t position, uint8_t ascii) {
-  TM1638display7Seg(position, SevenSeg[ascii - 32]);
+  TM1638display7Seg(position, SevenSeg[ascii - ASCII_OFFSET]);
 }
  
 void TM1638displayHex(uint8_t position, uint8_t hex) 
 {
     uint8_t offset = 0;
-    if ((hex >= 0) && (hex <= 9))
+    if (hex <= 9)
     {
-        TM1638display7Seg(position, SevenSeg[hex + 16]);
+        TM1638display7Seg(position, SevenSeg[hex + HEX_OFFSET]);
         // 16 is offset in reduced ASCII table for 0 
     }else if ((hex >= 10) && (hex <=15))
     {
@@ -104,7 +106,7 @@ void TM1638displayHex(uint8_t position, uint8_t hex)
          case 14: offset = 'E'; break;
          case 15: offset = 'F'; break;
         }
-        TM1638display7Seg(position, SevenSeg[offset-32]);
+        TM1638display7Seg(position, SevenSeg[offset-ASCII_OFFSE]);
     }
     
 }
@@ -164,8 +166,42 @@ uint8_t TM1638shiftIn(void) {
 void TM1638brightness(uint8_t brightness)
 {
     uint8_t  value = 0;
-    value = BRIGHTADR + (0x07 & brightness);
+    value = BRIGHTADR + (BRIGHT_MASK & brightness);
     STBpin_SetLow();
     TM1638shiftOut(value);
     STBpin_SetHigh(); 
+}
+
+void TM1638setLEDs(uint16_t ledvalues)
+{
+  for (uint8_t LEDposition = 0;  LEDposition < 8; LEDposition++) {
+    uint8_t color = 0;
+
+    if ((ledvalues & (1 << LEDposition)) != 0) {
+      color |= TM1638_RED_LED; //scan lower byte, set Red if one
+    } 
+
+    if ((ledvalues & (1 << (LEDposition + 8))) != 0) {
+      color |= TM1638_GREEN_LED; //scan upper byte, set green if one
+    }
+
+    TM1638setLED(LEDposition, color);
+  }
+}
+
+void TM1638displayIntNum(unsigned long number, bool leadingZeros)
+{
+  char values[DISPLAY_SIZE + 1];
+  snprintf(values, DISPLAY_SIZE + 1, leadingZeros ? "%08ld" : "%ld", number); 
+  TM1638displayText(values);
+} 
+
+void TM1638DisplayDecNumNibble(uint16_t  numberUpper, uint16_t numberLower, bool leadingZeros)
+{
+  char valuesUpper[DISPLAY_SIZE + 1];
+  char valuesLower[DISPLAY_SIZE/2 + 1];
+  snprintf(valuesUpper, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : "%d", numberUpper);
+  snprintf(valuesLower, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : "%d", numberLower); 
+  strcat(valuesUpper ,valuesLower);
+  TM1638displayText(valuesUpper);
 }

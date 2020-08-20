@@ -36,7 +36,7 @@ So it must be level shifted from 5v to 3.3v if running PIC at 5V.
 
 1. PIC RX RB5 << HM-10 TX.
 2. PIC TX RB7 >> HM-10 RX.
-3. Sesnor line on RC2.
+3. Sensor line on RC2.
 4. STATUS LED on RC3.
 
 Bluetooth module used: Bluetooth Module HM-10 BLE 4.0 CC2540.
