@@ -1,21 +1,16 @@
-
-
 Overview
 --------------------------------------------
 * Name: pic_16F18446_projects
 * Description: A set of projects for a **Microchip** 
  PIC 16F18446 Micro-controller, written in C (xc8 complier).
 * Author: Gavin Lyons 
-* Contact: Github or glyons66@hotmail.com.
 * Copyright: (C) 2019 Gavin Lyons see LICENSE.md in documentation section.
-
 
 
 Project List
 -----------------------------------------
 A set of Projects, libraries and example code for the 20-pin, 8-bit PIC 16F18446 Microcontroller,
-made by *Microchip*. Each Project has a short Readme, schematic and code files
-in the relevant sub folder. All code is written in C(xc8 compiler)
+made by *Microchip*. All code is written in C(xc8 compiler)
 
 **Project List:**
 
