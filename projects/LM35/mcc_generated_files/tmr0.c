@@ -134,7 +134,6 @@ void TMR0_ISR(void)
         if(counter==200)
         { 
           counter=0;
-          LED_STATUS_RA2_Toggle(); 
         } 
 }
 

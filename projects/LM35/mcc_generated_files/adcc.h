@@ -88,7 +88,6 @@ typedef __uint24 uint24_t;
 
 typedef enum
 {
-    POT_ANC0 =  0x10,
     LM35_ANC1 =  0x11,
     channel_Vss =  0x3B,
     channel_Temp_Sensor =  0x3C,

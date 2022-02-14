@@ -16,7 +16,7 @@ made by *Microchip*. All code is written in C(xc8 compiler)
 
 | Num | Desc | Link |
 | --- | --- | --- |
-| 1 |  HD44780 PCF8574/I2C LCD 16x02 displaying LM35 + 12 bit ADC input  | [URL](projects/LM35) |
+| 1 |  HD44780 PCF8574/I2C LCD 16x02 displaying LM35 sensor data | [URL](projects/LM35) |
 | 2 |  TM1638 / LKM1638 7 Segment 8 LED and 8 Push Button Module library (model 1 &  3)| [URL](projects/TM1638) |
 | 3 |  TM1638 Seven Segment 16 Push Button Module (model 2) library  | [URL](projects/TM1638_Model2) |
 | 4 |  14 segment alphanumeric LED display module library  | [URL](projects/FourteenSeg) |
