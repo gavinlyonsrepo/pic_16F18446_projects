@@ -119,23 +119,7 @@ void TMR0_Reload(uint8_t periodVal)
    TMR0H = periodVal;
 }
 
-void TMR0_ISR(void)
-{
-    // clear the TMR0 interrupt flag
-    PIR0bits.TMR0IF = 0;
-    if(TMR0_InterruptHandler)
-    {
-        TMR0_InterruptHandler();
-    }
 
-    // add your TMR0 interrupt custom code
-     // ---------- Glyons ------------
-        counter++;
-        if(counter==200)
-        { 
-          counter=0;
-        } 
-}
 
 
 void TMR0_SetInterruptHandler(void (* InterruptHandler)(void)){

@@ -54,8 +54,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-// ---------- Glyons ------------
-uint8_t counter=0; //counter incremented by Timer0 overflow.
+
+
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 
