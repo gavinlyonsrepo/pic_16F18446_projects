@@ -2,9 +2,8 @@
 
 Overview
 ---------------------------
-* Name: LCD16x02_I2C
 * Description: Display the data from a LM35 temperature sensor 
-to an LCD 16X02 display HD44780 via the I2C bus and a PCF8574 Interface "backpack" board
+to an LCD display HD44780 via the I2C bus and a PCF8574 Interface "backpack" board
 using a PIC16F18446.
 * Author: Gavin Lyons.
 
@@ -38,7 +37,7 @@ In this example code, a 4-pin PCF8574 Interface "backpack" board is attached to 
 1. RB4 = SDA
 2. RB6 = SCLK 
 
-The LCD code are in a separate library files.
+The LCD code are in a separate library files. The Library supports both 16x02 and 20x04 LCD's.
 The Data is sent in 4-bit mode. The upper nibble holds the data and lower nibble of byte manipulates the control bits of LCD. 
 
 ![PCF8574 & LCD ](https://github.com/gavinlyonsrepo/pic_16F1619_projects/blob/master/images/LCDPCF.jpg)
