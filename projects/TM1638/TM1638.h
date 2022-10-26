@@ -33,6 +33,13 @@
 #define TM1638_GREEN_LED 0x01
 #define TM1638_OFF_LED 0x00
 
+typedef enum 
+{
+	TMAlignTextRight = 1, 
+	TMAlignTextLeft = 2, 
+}AlignTextType_e; // Alignment of text
+
+
 // Init the module
 void TM1638Init(void);
 
@@ -81,13 +88,13 @@ uint8_t TM1638shiftIn(void);
 // Controls clock signal when shifting data out, used internally
 void TM1638sclock(void);
 
-//Display an integer and leading zeros optional
-void TM1638displayIntNum(unsigned long number, bool leadingZeros);
+//Display an integer and leading zeros optional +  text alignment
+void TM1638displayIntNum(unsigned long number, bool leadingZeros, AlignTextType_e);
 
 //Divides the display into two nibbles and displays a Decimal number in each.
 //takes in two numbers 0-9999 for each nibble ,  and byte for decimal point display,
-//and leading zeros optional
-void TM1638DisplayDecNumNibble(uint16_t numberUpper, uint16_t numberLower, bool leadingZeros);
+//and leading zeros optional, text alignment
+void TM1638DisplayDecNumNibble(uint16_t numberUpper, uint16_t numberLower, bool leadingZeros, AlignTextType_e);
 
 // Set the LEDs. passed a word. 
 // For model 3 the word contains:

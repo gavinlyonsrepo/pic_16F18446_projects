@@ -9,11 +9,9 @@ Supports the models with bi colour LEDS and single colour LEDS.
 * Author: Gavin Lyons.
 * URL : https://github.com/gavinlyonsrepo/pic_16F18446_projects
 * Model : 1 & 3
-* Complier: xc8 v2.10 compiler
+* Complier: xc8 v2.40 compiler
 * PIC: PIC16F18446
-* IDE:  MPLAB X v5.30
-* MCC version: 3.75
-* Development board: Microchip Curiosity Board DM164137
+* IDE:  MPLAB X v6.00
 * Note: This library is a fork of a section of the [Arduino library](https://github.com/gavinlyonsrepo/TM1638plus) 
 "TM1638plus" which is also written by Author and can be found in Arduino library manger. 
 

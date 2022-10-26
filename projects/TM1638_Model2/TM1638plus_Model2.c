@@ -21,10 +21,10 @@ void TM1638Init_Model2( bool swap_nibbles)
   TM1638sendCommand(ACTIVATE_TM);
   TM1638brightness(DEFAULT_BRIGHTNESS);
   TM1638Reset();
-        if (swap_nibbles == true)
-        {
-            _SWAP_NIBBLES = true;
-        }
+    if (swap_nibbles == true)
+    {
+        _SWAP_NIBBLES = true;
+    }
   
 }
 
@@ -56,10 +56,10 @@ void TM1638DisplaySegments(uint8_t segment, uint8_t digit)
    	  uint8_t upper , lower = 0;
    	  lower = (digit) & 0x0F;  // select lower nibble
    	  upper =  (digit >> 4) & 0X0F; //select upper nibble
-   	  digit = lower << 4 | upper;
+   	  digit = (uint8_t)(lower << 4 | upper);
    }
     
-  segment = (segment<<1);
+  segment = (uint8_t)(segment<<1);
   TM1638sendCommand(WRITE_LOC);
   STBpin_SetLow();
   TM1638shiftOut(SEG_ADR | segment);
@@ -83,8 +83,8 @@ void TM1638DisplayStr(const char* string, const uint16_t dots)
  char c, pos;
  uint16_t i = 0;
   pos = 0;
-  while (c = (*string++)) {
-    if (dots >> 7-i & 0x01) {
+  while ((c = (*string++))) {
+    if (dots >> (7-i) & 0x01) {
       values[i] = (SevenSeg[c - ASCII_OFFSET] | DOT_MASK_DEC);
     }  else {
        values[i] = SevenSeg[c - ASCII_OFFSET] ;
@@ -159,29 +159,97 @@ uint8_t TM1638shiftIn(void) {
 
 }
 
-void TM1638DisplayHexNum(uint16_t  numberUpper, uint16_t numberLower, uint8_t dots, bool leadingZeros)
+void TM1638DisplayHexNum(uint16_t  numberUpper, uint16_t numberLower, uint8_t dots, bool leadingZeros, AlignTextType_e  TextAlignment)
 {
   char valuesUpper[DISPLAY_SIZE + 1];
   char valuesLower[DISPLAY_SIZE/2 + 1];
-  snprintf(valuesUpper, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04X" : "%X", numberUpper);
-  snprintf(valuesLower, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04X" : "%X", numberLower); 
+  char TextDisplay[5] = "%";
+  char TextLeft[4] = "-4X";
+  char TextRight[3] = "4X";
+  
+     if (TextAlignment == TMAlignTextLeft)
+    {
+        strcat(TextDisplay ,TextLeft);  // %-4X
+    }else if ( TextAlignment == TMAlignTextRight)
+    {
+        strcat(TextDisplay ,TextRight); // %4X
+    }  
+    
+  snprintf(valuesUpper, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04X" : TextDisplay, numberUpper);
+  snprintf(valuesLower, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04X" : TextDisplay, numberLower); 
   strcat(valuesUpper ,valuesLower);
   TM1638DisplayStr(valuesUpper, dots);
 }
 
-void TM1638DisplayDecNum(unsigned long number, uint8_t  dots, bool leadingZeros)
+void TM1638DisplayDecNum(unsigned long number, uint8_t  dots, bool leadingZeros,  AlignTextType_e  TextAlignment)
 { 
-char values[DISPLAY_SIZE + 1];
-  snprintf(values, DISPLAY_SIZE + 1, leadingZeros ? "%08ld" : "%ld", number); 
+  char values[DISPLAY_SIZE + 1];
+  char TextDisplay[6] = "%";
+  char TextLeft[5] = "-8ld";
+  char TextRight[4] = "8ld";
+  
+    if (TextAlignment == TMAlignTextLeft)
+    {
+        strcat(TextDisplay ,TextLeft);  // %ld
+    }else if ( TextAlignment == TMAlignTextRight)
+    {
+        strcat(TextDisplay ,TextRight); // %8ld
+    }
+    
+  snprintf(values, DISPLAY_SIZE + 1, leadingZeros ? "%08ld" : TextDisplay, number); 
   TM1638DisplayStr(values, dots);
+
 }
 
-void TM1638DisplayDecNumNibble(uint16_t  numberUpper, uint16_t numberLower, uint8_t  dots, bool leadingZeros)
+void TM1638DisplayDecNumNibble(uint16_t  numberUpper, uint16_t numberLower, uint8_t  dots, bool leadingZeros,  AlignTextType_e  TextAlignment)
 {
   char valuesUpper[DISPLAY_SIZE + 1];
   char valuesLower[DISPLAY_SIZE/2 + 1];
-  snprintf(valuesUpper, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : "%d", numberUpper);
-  snprintf(valuesLower, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : "%d", numberLower); 
+  char TextDisplay[5] = "%";
+  char TextLeft[4] = "-4d";
+  char TextRight[3] = "4d";
+  
+     if (TextAlignment == TMAlignTextLeft)
+    {
+        strcat(TextDisplay ,TextLeft);  // %-4d
+    }else if ( TextAlignment == TMAlignTextRight)
+    {
+        strcat(TextDisplay ,TextRight); // %4d
+    }  
+    
+  snprintf(valuesUpper, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : TextDisplay, numberUpper);
+  snprintf(valuesLower, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : TextDisplay, numberLower); 
   strcat(valuesUpper ,valuesLower);
   TM1638DisplayStr(valuesUpper, dots);
+    
+}
+
+uint16_t  TM1638ReadKey16Two()
+{
+    
+  uint16_t key_value = 0;
+  uint8_t Datain ,i = 0;
+  
+  STBpin_SetLow();
+  TM1638shiftOut(BUTTONS_MODE);
+  DIOpin_SetDigitalInput();
+  
+  for (i = 0; i < 4; i++)
+  {
+     Datain = TM1638shiftIn();
+      // turn Datain ABCDEFGI = 0BC00FG0  into 00CG00BF see matrix below
+     Datain = (((Datain & 0x40) >> 3 | (Datain & 0x04)) >> 2) | (Datain & 0x20) | (Datain & 0x02) << 3;
+     // i = 0 Datain =  00,10,9,0021 // i = 1 Datain  = 00,12,11,0043
+     // i = 2 Datain =  00 ,14,13,0065 // i = 3 Datain =  00,16,15,0087
+     // key_value =  16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1. 
+      key_value |= ((Datain & 0x000F) << (2*i)) | (((Datain & 0x00F0) << 4) << (2*i));
+  }
+  DIOpin_SetDigitalOutput();
+  STBpin_SetHigh();
+   
+  return (key_value);
+  
+  //  Data matrix for read key_value. c = datain
+  //   c3 0110 0110  c2 0110 0110  c1 0110 0110  c0 0110 0110 :bytes read 
+  //    8,16 7,15     6,14 5,13     4,12 3,11                   2,10  1,9 :button value
 }

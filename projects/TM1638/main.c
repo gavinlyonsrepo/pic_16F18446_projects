@@ -103,38 +103,48 @@ void Test2() {
     TM1638displayASCII(1, '3');
     TM1638displayASCII(2, '4');
     TM1638displayASCII(3, '8');
-    __delay_ms(myTestDelay);
+    __delay_ms(myTestDelay1);
     TM1638Reset();
 }
 
 void Test3() {
     //TEST 3 single segment (pos, (dp)gfedcba)
-    //In this case  segment g (middle dash) of digit position 7
-    TM1638display7Seg(7, 0b01000000);
-    __delay_ms(myTestDelay);
+  uint8_t pos = 0;
+  for (pos = 0 ; pos<8 ; pos++)
+  {
+    TM1638display7Seg(pos, (uint8_t)(1<<(7-pos))); // Displays a single seg in (dp)gfedcba) in each  pos 0-7
+    __delay_ms(myTestDelay1);
+  }
 }
+
+
 
 void Test4() {
     // Test 4 Hex digits.
-    TM1638displayHex(0, 1);
-    TM1638displayHex(1, 2);
-    TM1638displayHex(2, 3);
-    TM1638displayHex(3, 4);
-    TM1638displayHex(4, 5);
-    TM1638displayHex(5, 6);
-    TM1638displayHex(6, 7);
-    TM1638displayHex(7, 8);
+    TM1638displayHex(0, 0);
+    TM1638displayHex(1, 1);
+    TM1638displayHex(2, 2);
+    TM1638displayHex(3, 3);
+    TM1638displayHex(4, 4);
+    TM1638displayHex(5, 5);
+    TM1638displayHex(6, 6);
+    TM1638displayHex(7, 7);
     __delay_ms(myTestDelay);
 
     TM1638displayHex(0, 8);
     TM1638displayHex(1, 9);
-    TM1638displayHex(2, 10);
-    TM1638displayHex(3, 11);
-    TM1638displayHex(4, 12);
-    TM1638displayHex(5, 13);
-    TM1638displayHex(6, 14);
-    TM1638displayHex(7, 15);
+    TM1638displayHex(2, 0x0A);
+    TM1638displayHex(3, 0x0B);
+    TM1638displayHex(4, 0x0C);
+    TM1638displayHex(5, 0x0D);
+    TM1638displayHex(6, 0x0E);
+    TM1638displayHex(7, 0x0F);
     __delay_ms(myTestDelay);
+    TM1638Reset();
+    
+    TM1638displayHex(1, 0xAE);
+    TM1638displayHex(7, 0x10);
+     __delay_ms(myTestDelay);; // display " E      0"
 }
 
 void Test5() {
@@ -158,18 +168,33 @@ void Test6() {
 }
 
 void Test7() {
-    // TEST 7a Integer
-    TM1638displayIntNum(87, false); // "87      "
+    // TEST 7a Integer 
+    TM1638displayIntNum(87, false, TMAlignTextLeft); // "87      "
     __delay_ms(myTestDelay);
     // TEST 7b Integer
-    TM1638displayIntNum(12345, true); // "00012345"
+    TM1638displayIntNum(12345, true, TMAlignTextLeft); // "00012345"
     __delay_ms(myTestDelay);
     TM1638Reset();
-    // TEST 7b TM1638DisplayDecNumNIbble
-    TM1638DisplayDecNumNibble(1488, 9944, false); // "14889944"
+    // TEST 7c Integer
+    TM1638displayIntNum(6661, false, TMAlignTextRight); // "    6661"
     __delay_ms(myTestDelay);
-    TM1638DisplayDecNumNibble(153, 699, true); // "01530699"
+    // TEST 7d Integer
+    TM1638displayIntNum(195, true, TMAlignTextRight); // "00000195"
     __delay_ms(myTestDelay);
+    TM1638Reset();
+    
+    // TEST 7e TM1638DisplayDecNumNIbble
+    TM1638DisplayDecNumNibble(1488, 994, false, TMAlignTextLeft); // "1488994 "
+    __delay_ms(myTestDelay);
+    TM1638DisplayDecNumNibble(153, 699, true, TMAlignTextLeft); // "01530699"
+    __delay_ms(myTestDelay);
+    TM1638Reset();
+    
+    TM1638DisplayDecNumNibble(13, 9, false, TMAlignTextRight); // "  13  9"
+    __delay_ms(myTestDelay);
+    TM1638DisplayDecNumNibble(152, 8, true, TMAlignTextRight); // "01520008"
+    __delay_ms(myTestDelay);
+    
 }
 
 void Test8() {
@@ -295,7 +320,7 @@ void Test14() {
          0x40 : S7 Pressed  0100 0000 
          0x80 : S8 Pressed  1000 0000  
          */
-        TM1638displayIntNum(buttons, true);
+        TM1638displayIntNum(buttons, false, TMAlignTextRight);
         __delay_ms(250);
     }
 }

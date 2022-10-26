@@ -7,11 +7,9 @@ This library supports (16 KEY)(QFY) variant which has 16 pushbuttons.
 * PIC: PIC 16F18446
 * URL : https://github.com/gavinlyonsrepo/pic_16F18446_projects
 * Model : 2
-* Development board: Microchip Curiosity Board DM164137
-* Complier: xc8 v2.05 compiler
+* Complier: xc8 v2.40 compiler
 * PIC: PIC16F18446
-* IDE:  MPLAB X v5.15
-* MCC version: 3.85
+* IDE:  MPLAB X v6.00
 * Note: This library is a fork of a section of the [Arduino library](https://github.com/gavinlyonsrepo/TM1638plus) 
 "TM1638plus" which is also written by Author and can be found in Arduino library manger.  
 

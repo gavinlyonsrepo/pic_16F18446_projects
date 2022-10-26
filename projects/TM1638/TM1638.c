@@ -48,7 +48,7 @@ void TM1638setLED(uint8_t position, uint8_t value)
   DIOpin_SetDigitalOutput(); 
   TM1638SendCommand(WRITE_LOC);
   STBpin_SetLow();
-  TM1638shiftOut(LEDADR + (position << 1));
+  TM1638shiftOut((uint8_t)(LEDADR + (position << 1)));
   TM1638shiftOut(value);
   STBpin_SetHigh(); 
 }
@@ -77,7 +77,7 @@ void TM1638displayASCIIwDot(uint8_t position, uint8_t ascii) {
 void TM1638display7Seg(uint8_t position, uint8_t value) { // call 7-segment
   TM1638SendCommand(WRITE_LOC);
   STBpin_SetLow();
-  TM1638shiftOut(SEGADR + (position << 1));
+  TM1638shiftOut((uint8_t)(SEGADR + (position << 1)));
   TM1638shiftOut(value);
   STBpin_SetHigh(); 
 }
@@ -90,6 +90,7 @@ void TM1638displayASCII(uint8_t position, uint8_t ascii) {
 void TM1638displayHex(uint8_t position, uint8_t hex) 
 {
     uint8_t offset = 0;
+    hex = hex % 16;
     if (hex <= 9)
     {
         TM1638display7Seg(position, SevenSeg[hex + HEX_OFFSET]);
@@ -106,7 +107,7 @@ void TM1638displayHex(uint8_t position, uint8_t hex)
          case 14: offset = 'E'; break;
          case 15: offset = 'F'; break;
         }
-        TM1638display7Seg(position, SevenSeg[offset-ASCII_OFFSE]);
+        TM1638display7Seg(position, SevenSeg[offset-32]);
     }
     
 }
@@ -139,7 +140,7 @@ uint8_t TM1638readButtons()
 
   for (uint8_t i = 0; i < 4; i++)
   {
-    uint8_t v = TM1638shiftIn() << i;
+    uint8_t v = (uint8_t)(TM1638shiftIn() << i);
     buttons |= v;
   }
 
@@ -189,19 +190,45 @@ void TM1638setLEDs(uint16_t ledvalues)
   }
 }
 
-void TM1638displayIntNum(unsigned long number, bool leadingZeros)
+void TM1638displayIntNum(unsigned long number, bool leadingZeros, AlignTextType_e TextAlignment)
 {
   char values[DISPLAY_SIZE + 1];
-  snprintf(values, DISPLAY_SIZE + 1, leadingZeros ? "%08ld" : "%ld", number); 
+  char TextDisplay[5] = "%";
+  char TextLeft[3] = "ld";
+  char TextRight[4] = "8ld";
+  
+  if (TextAlignment == TMAlignTextLeft)
+    {
+        strcat(TextDisplay ,TextLeft);  // %ld
+    }else if ( TextAlignment == TMAlignTextRight)
+    {
+        strcat(TextDisplay ,TextRight); // %8ld
+    }
+    
+  snprintf(values, DISPLAY_SIZE + 1, leadingZeros ? "%08ld" : TextDisplay, number); 
   TM1638displayText(values);
 } 
 
-void TM1638DisplayDecNumNibble(uint16_t  numberUpper, uint16_t numberLower, bool leadingZeros)
+void TM1638DisplayDecNumNibble(uint16_t  numberUpper, uint16_t numberLower, bool leadingZeros, AlignTextType_e TextAlignment)
 {
-  char valuesUpper[DISPLAY_SIZE + 1];
-  char valuesLower[DISPLAY_SIZE/2 + 1];
-  snprintf(valuesUpper, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : "%d", numberUpper);
-  snprintf(valuesLower, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : "%d", numberLower); 
-  strcat(valuesUpper ,valuesLower);
-  TM1638displayText(valuesUpper);
+    char valuesUpper[DISPLAY_SIZE + 1];
+    char valuesLower[DISPLAY_SIZE/2 + 1];
+    char TextDisplay[5] = "%";
+    char TextLeft[4] = "-4d";
+    char TextRight[3] = "4d";
+
+     if (TextAlignment == TMAlignTextLeft)
+    {
+        strcat(TextDisplay ,TextLeft);  // %-4d
+    }else if ( TextAlignment == TMAlignTextRight)
+    {
+        strcat(TextDisplay ,TextRight); // %4d
+    }
+
+    snprintf(valuesUpper, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : TextDisplay, numberUpper);
+    snprintf(valuesLower, DISPLAY_SIZE/2 + 1, leadingZeros ? "%04d" : TextDisplay, numberLower); 
+
+    strcat(valuesUpper ,valuesLower);
+    TM1638displayText(valuesUpper);
+    
 }
