@@ -16,12 +16,9 @@ Overview
 A library to display data on 8-digit TM1638 seven segment LED module's.
 
 * Author: Gavin Lyons.
-* URL : https://github.com/gavinlyonsrepo/pic_16F18446_projects
-* Model : 1 & 3
 * Complier: xc8 v2.40 compiler
 * PIC: PIC16F18446
 * IDE:  MPLAB X v6.00
-
 
 Hardware
 ----------------------
@@ -51,7 +48,7 @@ In order to switch between model 1 & model 3 in the main.c test file
 change the boolean LKM1638 at start.
 
 | Model No | file Name | flag LKM1638 | 
-| ------ | ------ | 
+| ------ | ------ | ------ | 
 | One | main.c | false |
 | Two | main_Model2.c  | n/a | 
 | Three | main.c | true |
