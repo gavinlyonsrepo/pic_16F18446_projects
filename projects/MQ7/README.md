@@ -35,11 +35,11 @@ The Data is sent in 4-bit mode. The upper nibble holds the data and lower nibble
 
 ## Pin Assignments
 
-![Pic 1](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/MQ7.jpg)
+![Pic 1](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/mq7.jpg)
 
 ## Schematic 
 
-TODO , Work in progress.
+![Pic 2](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/mq7sch.jpg)
 
 
 ## See Also
