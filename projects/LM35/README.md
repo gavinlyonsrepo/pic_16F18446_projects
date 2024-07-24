@@ -41,3 +41,13 @@ The LCD code are in a separate library files. The Library supports both 16x02 an
 The Data is sent in 4-bit mode. The upper nibble holds the data and lower nibble of byte manipulates the control bits of LCD. 
 
 ![PCF8574 & LCD ](https://github.com/gavinlyonsrepo/pic_16F1619_projects/blob/master/images/LCDPCF.jpg)
+
+Schematic 
+------------
+
+![Pic 1](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/LM35.png)
+
+Output 
+---------------
+
+![Pic 2](https://github.com/gavinlyonsrepo/pic_16F18446_projects/blob/master/images/LM35data.jpg)
